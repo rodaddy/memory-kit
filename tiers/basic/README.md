@@ -42,7 +42,7 @@ extension). It works for owners who are never in the chat during the day - the
 
 memory-kit is horizontal infrastructure rather than a vertical kit, and it ships
 as the free front door: the meetup takeaway and the thing a walk-in leaves with
-(kit tribunal ruling, 2026-08-11).
+(kit review panel decision, 2026-08-11).
 
 ## What it refuses to do
 

@@ -212,8 +212,7 @@ open and this version adds more.
 
 ## [1.0.1] - 2026-08-12
 
-Kit-quality-tribunal rework (`research/kits/2026-08-11_kit-quality-tribunal.md`,
-`## memory-kit`). The tribunal's verdict was REWORK: structurally clean, no
+Kit-quality review panel rework (2026-08-11). The panel's verdict was REWORK: structurally clean, no
 judgment and no refusal — "a filing convention, not a product." All four rework
 items are addressed, plus the two line-wide changes.
 
@@ -224,7 +223,7 @@ new boxes in `README.md` are all open.
 ### Added
 
 - **`skills/memory/workflows/check-against-memory.md` — the contradiction
-  check.** The tribunal's single sharpest finding: the memory already contained
+  check.** The panel's single sharpest finding: the memory already contained
   everything needed to catch a decision arguing with an older one, and nothing
   told the AI to look. The workflow scans standing decisions before answering
   anything the user opens with, before any proposed change or direction, and
@@ -234,7 +233,7 @@ new boxes in `README.md` are all open.
   guide (match on the KIND of job, not the words — "40-unit HOA" against
   "commercial, off-route"), a decided-regretted-decided-again lookup, and hard
   limits: cite or stay quiet, never overrule the owner, never invent a prior
-  decision. This is the item that fixes tribunal criterion 3.
+  decision. This is the item that fixes review criterion 3.
 - **`skills/memory/workflows/memory-brief.md` — the monthly brief.** Rolls a
   period's changes, decisions, open items (with their age), and reversals into
   one dated `briefs/YYYY-MM.md`, optionally a self-contained
@@ -293,8 +292,8 @@ new boxes in `README.md` are all open.
   and the monthly brief added); new plain-language sections for when the kit
   says no, seeing it work in `examples/` first, and carrying the memory to
   another AI; quick-reference table extended.
-- `README.md`: records the tribunal disposition — memory-kit ships as the
-  **free front door**, not a priced kit, by tribunal ruling, and is horizontal
+- `README.md`: records the review panel disposition — memory-kit ships as the
+  **free front door**, not a priced kit, by review panel decision, and is horizontal
   infrastructure the vertical kits sit on rather than a vertical kit itself;
   carries the do-not-target-insurance/medical caveat; package shape and
   acceptance checklist updated.
@@ -303,7 +302,7 @@ new boxes in `README.md` are all open.
 
 - Every acceptance box added in this version is OPEN. Nothing here has been
   dry-run, clean-room tested, or checked on a real device, and the standing
-  LI-smb-hq rule that Rico's manual device check is the final validation is
+  rule that a manual check on a real device is the final validation is
   unchanged.
 - The optional `briefs/YYYY-MM.html` output is specified in the workflow and
   has never been rendered; "opens offline by double-click and prints clean" is
