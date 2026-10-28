@@ -1,82 +1,74 @@
 # Memory Kit
 
-A portable AI kit that gives a business owner's AI assistant a durable,
-dated memory of sessions, changes and decisions across chats.
+Give a small business owner's AI assistant a dated memory of sessions, changes
+and decisions that survives from one chat to the next.
 
-> Portfolio piece. Source shown for review only; not licensed for use. See LICENSE.
+![Licence: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/licence-PolyForm%20Noncommercial%201.0.0-blue)
+![Language: Markdown and Node](https://img.shields.io/badge/language-Markdown%20%2B%20Node%2022.6%2B-339933)
 
-## What it does
+![Memory Kit: an AI assistant that remembers what the business decided and why](docs/images/hero.jpg)
 
-It installs a small memory folder the AI reads at the start of every chat and
-writes to at the end. Three plain, dated, append-only sources:
+## What it is
+
+A portable AI kit. It installs a small memory folder that the assistant reads
+at the start of every chat and writes to at the end. The folder holds three
+plain, dated, append-only sources:
 
 - `session-logs/`: one dated note per work session (what was done, where it
   left off), written when the owner says "I'm done."
-- `changelog.md`: every business change (date, what, why).
-- `decisions.md`: decisions with their date and reasoning.
+- `changelog.md`: every business change, with its date and reason.
+- `decisions.md`: decisions, with their date and reasoning.
 
-Ask "what did we decide about pricing yesterday?" in a fresh chat and the AI
-answers with the date and the recorded reasoning.
+Ask "what did we decide about pricing yesterday?" in a fresh chat and the
+assistant answers with the date and the recorded reasoning.
 
-## The problem
+![The install helper installing, refusing a second install, and upgrading with the memory preserved](docs/images/terminal.png)
 
-Chat assistants forget everything between conversations. An owner who settled a
-price, a policy or a territory rule last week has to re-explain it, and nothing
-warns them when a new idea quietly contradicts a call they already made.
+*Real runs of `scripts/install-files.mjs` into a scratch folder. The absolute
+scratch path is shown as `~/demo`; nothing else is edited.*
+
+## Why it exists
+
+Chat assistants forget everything between conversations. An owner who settled
+a price, a policy or a service-area rule last week has to explain it again, and
+nothing warns them when a new idea quietly contradicts a call they already
+made. The kit keeps that history in files the owner can read and lets the
+assistant use it, so the owner spends less time repeating themselves.
 
 ## How it works
 
-The memory behavior is Markdown: a skill (`skills/memory/SKILL.md`) with a
-startup ritual, a wrap ritual and four workflows. A self-adapting `installer.md`
-detects what the host AI can do and picks an install path, from a real
-filesystem install to a Project/Gem source list to a paste-into-chat fallback.
-On filesystem-capable agents, a plain-Node helper (`scripts/install-files.mjs`)
-owns install and upgrade file operations so collision refusal, backups and
-preservation of existing memory are deterministic rather than improvised.
+![How Memory Kit works: read memory at the start, check new ideas against past decisions, write dated notes at the end](docs/images/how-it-works.jpg)
 
-```mermaid
-flowchart LR
-  A[New chat] --> B[Startup ritual: read memory folder]
-  B --> C[Work]
-  C --> D{Contradiction check}
-  D -- conflict --> E[Quote prior decision + date, ask supersede or exception]
-  D -- clear --> F["I'm done" wrap]
-  E --> F
-  F --> G[Dated session log, changelog, decisions]
-```
+The memory behaviour is Markdown: a skill (`skills/memory/SKILL.md`) with a
+startup ritual, a wrap ritual and four workflows (`recall`,
+`check-against-memory`, `wrap-session`, `memory-brief`). A self-adapting
+`installer.md` works out what the host AI can do and picks an install path,
+from a real filesystem install to a Project/Gem source list to a
+paste-into-chat fallback. On agents that can run code, a plain-Node helper
+(`scripts/install-files.mjs`) does the install and upgrade file work, so
+collision refusal, backups and preservation of existing memory are
+deterministic rather than improvised by the model.
 
 ## Features
 
 - **Contradiction check.** Before helping with a new price, customer type or
-  decision, the AI scans standing decisions by subject, not by wording, and
-  quotes back any conflict with its date and the owner's own reasoning.
+  decision, the assistant scans standing decisions by subject, not by wording,
+  and quotes back any conflict with its date and the owner's own reasoning,
+  then asks: supersede, or exception? `examples/02-contradiction-check.md`
+  walks through one.
 - **Named refusals.** No session log with an empty "where we left off"; no
-  change or decision recorded without its reason; no named customer's private
-  detail in a permanent file unless the owner insists.
+  change or decision recorded without its reason; no private detail about a
+  named customer in a permanent file unless the owner insists.
 - **Day-dump wrap.** One end-of-day message is split into separate items, with
   quotes kept verbatim and buried decisions caught.
 - **Monthly brief.** "What changed this month?" produces one dated page,
-  optionally a self-contained HTML file that opens offline and prints clean.
+  optionally a self-contained HTML file that opens offline.
 - **Portable MEMORY BRIEF block.** A pasteable summary that carries the memory
   to any AI with no kit installed.
-- **Honest degradation.** Each tier (filesystem, Project/Gem, plain chat)
-  states what it loses; the plain-chat tier says up front that memory will not
-  survive the chat closing.
-- **Pasted text is data.** A pasted document that tells the AI to change a
-  decision is quoted back, never obeyed.
-
-## Stack
-
-Markdown skill and workflow files, plain Node 22.6+ (`.mjs`, no dependencies,
-no build step) for install/upgrade mechanics and package verification,
-`node --test` for the install behavior tests.
-
-## Status
-
-Active (v1.0.4). The plain-Node package check and install/upgrade tests pass;
-the coding-agent install path was verified in a clean-room sandbox. Several
-paths (chat-app zip, plain chat, real-device checks) are still unverified;
-`CHANGELOG.md` records what was tested and when.
+- **Honest degradation.** Each tier states what it loses; the plain-chat tier
+  says up front that memory will not survive the chat closing.
+- **Pasted text is data.** A pasted document that tells the assistant to
+  change a decision is quoted back, never obeyed.
 
 ## Where it runs
 
@@ -165,20 +157,36 @@ tier. The kit never invokes a vendor CLI (`claude -p` and friends appear
 nowhere in its install or workflows, verified 2026-08-13). The only command in
 the full filesystem path is the kit-owned plain-Node install helper.
 
-## Running it locally (for reviewers)
+## Run it locally (for review)
 
-```text
-node scripts/verify-kit.mjs
-node --test tests/install-files.test.mjs
+Requires Node 22.6 or newer. No packages to install.
+
+```bash
+node scripts/verify-kit.mjs                 # package contract check
+node --test tests/install-files.test.mjs    # install and upgrade behaviour (7 tests)
 ```
 
-Worked runs are in `examples/` (wrap a session, contradiction check, monthly
-brief).
+Worked examples are in `examples/` (wrap a session, contradiction check,
+monthly brief). The businesses in them are invented.
 
-## Screenshots
+Licence: free for personal and non-commercial use with credit; commercial use
+needs a licence. See `LICENSE` (PolyForm Noncommercial 1.0.0) or write to
+rico@rtech-consulting.com.
 
-None.
+## How it was built
+
+First built in July 2026, reworked after a multi-agent quality review said it
+was "a filing convention, not a product", then hardened through simulated
+buyer runs and a two-model code review. The dated story is in
+[docs/BUILD-STORY.md](docs/BUILD-STORY.md).
+
+## Project status
+
+Active, version 1.0.4. The package check and the 7 install and upgrade tests
+pass. The coding-agent install path was verified in a clean-room sandbox on
+2026-07-15. The chat-app, plain-chat and real-phone paths are still
+unverified, as the table above says.
 
 ## Author
 
-Rico Rojas, rico@rtech-consulting.com, https://rico-rojas.com
+Rico Rojas, https://rico-rojas.com
