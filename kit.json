@@ -1,0 +1,9 @@
+{
+  "name": "memory-kit",
+  "version": "1.0.4",
+  "requirements": {
+    "runtimes": {
+      "node": ">=22.6.0"
+    }
+  }
+}
